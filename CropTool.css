@@ -1,0 +1,38 @@
+.ctMain {
+	position: absolute;
+}
+
+.ctImage {
+	position: absolute;
+	top: 0;
+	left: 0;
+	box-shadow: 0 0 0 2000px rgba(0,0,0,0.9);
+}
+
+.ctBox {
+	position: absolute;
+	top: 0;
+	left: 0;
+	outline: 1px solid white;
+	width: 100px;
+	height: 100px;
+	cursor: move;
+	box-shadow: 0 0 0 2000px rgba(0,0,0,0.7);
+}
+.ctBoxResizer {
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	right: -7px;
+	bottom: -7px;
+	background-color: white;
+	border-radius: 50%;
+	cursor: se-resize;
+	cursor: nwse-resize;
+}
+
+.ctInfo {
+	position: absolute;
+	color: #aaa;
+	font-size: 11px;
+}

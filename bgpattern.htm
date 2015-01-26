@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+	<head>
+		<title>bgpattern</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="style.css" type="text/css" />
+	</head>
+	<body>
+
+		<canvas id="canvas"></canvas>
+
+		<script>
+			var size=12;
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+
+			canvas.width=size*2;
+			canvas.height=size*2;
+
+			ctx.fillStyle="#e4e4e4";
+			ctx.fillRect(0, 0, 2*size, 2*size);
+
+			ctx.fillStyle="#fafafa";
+			ctx.fillRect(0, 0, size, size);
+			ctx.fillRect(size, size, size, size);
+
+			document.write(canvas.toDataURL("image/png") + "<br>");
+
+
+		</script>
+	</body>
+</html>
