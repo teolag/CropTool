@@ -1,9 +1,10 @@
 var CropTool = (function() {
-	var main, image, box, boxResizer, info,
+	var main, area, image, box, boxResizer, info,
 	cropData, zoom,
 	cropCallback, cancelCallback,
 	mouseDown, touchStart, downSize, action, startValue,
 
+	btnOk, btnCancel,
 
 	useRatio,
 
@@ -49,22 +50,43 @@ var CropTool = (function() {
 
 	createTool = function(s) {
 		main = document.createElement("div");
-		main.classList.add("ctMain");
+		main.classList.add("CropTool");
+
+		area = document.createElement("div");
+		area.classList.add("area");
 
 		box = document.createElement("div");
-		box.classList.add("ctBox");
+		box.classList.add("box");
 		box.addEventListener("dblclick", doCrop, false);
 		addEventListener("mousedown", cropHandler, false);
 		addEventListener("touchstart", cropHandler, false);
 
 		boxResizer = document.createElement("div");
-		boxResizer.classList.add("ctBoxResizer");
+		boxResizer.classList.add("boxResizer");
 		boxResizer.addEventListener("mousedown", cropHandler, false);
 		boxResizer.addEventListener("touchstart", cropHandler, false);
 
 		info = document.createElement("div");
-		info.classList.add("ctInfo");
+		info.classList.add("info");
 
+
+		btnOk = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		btnOk.classList.add("icon", "icon-ok");
+		var btnOkUse = document.createElementNS("http://www.w3.org/2000/svg", "use");
+		btnOkUse.setAttributeNS("http://www.w3.org/1999/xlink", "href", "CropTool.svg#icon-ok");
+		btnOk.appendChild(btnOkUse);
+		btnOk.addEventListener("click", clickOk, false);
+
+		btnCancel = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		btnCancel.classList.add("icon", "icon-cancel");
+		var btnCancelUse = document.createElementNS("http://www.w3.org/2000/svg", "use");
+		btnCancelUse.setAttributeNS("http://www.w3.org/1999/xlink", "href", "CropTool.svg#icon-cancel");
+		btnCancel.appendChild(btnCancelUse);
+		btnCancel.addEventListener("click", clickCancel, false);
+
+		main.appendChild(area);
+		main.appendChild(btnOk);
+		main.appendChild(btnCancel);
 		document.body.appendChild(main);
 	},
 
@@ -81,16 +103,16 @@ var CropTool = (function() {
 			console.warn("Either url or dataUrl must be defined to crop an image");
 			return;
 		}
-		image.classList.add("ctImage");
+		image.classList.add("image");
 		image.addEventListener("load", imageLoaded, false);
 	},
 
 	imageLoaded = function() {
 		cropData.originalWidth = image.width;
 		cropData.originalHeight = image.height;
-		main.appendChild(image);
-		main.appendChild(box);
-		main.appendChild(info);
+		area.appendChild(image);
+		area.appendChild(box);
+		area.appendChild(info);
 		box.appendChild(boxResizer);
 
 		bestFit();
@@ -124,10 +146,10 @@ var CropTool = (function() {
 		image.width = Math.round(cropData.originalWidth * zoom);
 		image.height = Math.round(cropData.originalHeight * zoom);
 
-		main.style.height = image.height + "px";
-		main.style.width = image.width + "px";
-		main.style.left = Math.round((window.innerWidth-image.width)/2)+"px";
-		main.style.top = Math.round((window.innerHeight-image.height)/2)+"px";
+		area.style.height = image.height + "px";
+		area.style.width = image.width + "px";
+		area.style.left = Math.round((window.innerWidth-image.width)/2)+"px";
+		area.style.top = Math.round((window.innerHeight-image.height)/2)+"px";
 
 		updateBox();
 	},
@@ -304,6 +326,16 @@ var CropTool = (function() {
 			updateBox();
 		}
 	},
+
+
+	clickOk = function(e) {
+		doCrop();
+	},
+
+	clickCancel = function(e) {
+		cancel();
+	},
+
 
 	getTouchInfo = function(e) {
 		var maxX=0, minX=100000, maxY=0, minY=100000;

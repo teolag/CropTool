@@ -1,15 +1,23 @@
-.ctMain {
-	position: absolute;
-}
-
-.ctImage {
+.CropTool {
 	position: absolute;
 	top: 0;
 	left: 0;
-	box-shadow: 0 0 0 2000px rgba(0,0,0,0.9);
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.3);
 }
 
-.ctBox {
+.CropTool .area {
+	position: absolute;
+}
+
+.CropTool .image {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.CropTool .box {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -19,7 +27,7 @@
 	cursor: move;
 	box-shadow: 0 0 0 2000px rgba(0,0,0,0.7);
 }
-.ctBoxResizer {
+.CropTool .boxResizer {
 	position: absolute;
 	width: 15px;
 	height: 15px;
@@ -31,8 +39,26 @@
 	cursor: nwse-resize;
 }
 
-.ctInfo {
+.CropTool .info {
 	position: absolute;
 	color: #aaa;
 	font-size: 11px;
+}
+
+.CropTool .icon {
+	position: absolute;
+	bottom: 0;
+	width: 40px;
+	height: 40px;
+	fill: #6a6;
+	cursor: pointer;
+}
+.CropTool .icon:hover {
+	fill: #9b9;
+}
+.CropTool .icon-cancel {
+	left: 0;
+}
+.CropTool .icon-ok {
+	right: 0;
 }
