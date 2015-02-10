@@ -73,7 +73,7 @@ var CropTool = (function() {
 		btnOk = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 		btnOk.classList.add("icon", "icon-ok");
 		var btnOkUse = document.createElementNS("http://www.w3.org/2000/svg", "use");
-		//btnOkUse.setAttributeNS("http://www.w3.org/1999/xlink", "href", "http://xio.se/projects/croptool/CropTool.svg#icon-ok");
+		btnOkUse.setAttributeNS("http://www.w3.org/1999/xlink", "href", "CropTool.svg#icon-ok");
 		btnOk.appendChild(btnOkUse);
 		btnOk.addEventListener("click", clickOk, false);
 		btnOk.addEventListener("touchend", clickOk, false);
@@ -81,7 +81,7 @@ var CropTool = (function() {
 		btnCancel = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 		btnCancel.classList.add("icon", "icon-cancel");
 		var btnCancelUse = document.createElementNS("http://www.w3.org/2000/svg", "use");
-		//btnCancelUse.setAttributeNS("http://www.w3.org/1999/xlink", "href", "http://xio.se/projects/croptool/CropTool.svg#icon-cancel");
+		btnCancelUse.setAttributeNS("http://www.w3.org/1999/xlink", "href", "CropTool.svg#icon-cancel");
 		btnCancel.appendChild(btnCancelUse);
 		btnCancel.addEventListener("click", clickCancel, false);
 		btnCancel.addEventListener("touchend", clickCancel, false);
@@ -163,11 +163,6 @@ var CropTool = (function() {
 		box.style.left = Math.round(cropData.left*zoom) + "px";
 		box.style.width = Math.round(cropData.width*zoom) + "px";
 		box.style.height = Math.round(cropData.height*zoom) + "px";
-
-		/*
-		boxResizer.style.top = (box.offsetTop + box.offsetHeight - 5) + "px";
-		boxResizer.style.left = (box.offsetLeft + box.offsetWidth - 5) + "px";
-		*/
 
 		info.style.top = (box.offsetTop + box.offsetHeight + 1) + "px";
 		info.style.right = (image.width - box.offsetLeft - box.offsetWidth + 7) + "px";
@@ -261,9 +256,6 @@ var CropTool = (function() {
 				dw = (touchNow.w - touchStart.w)/1;
 				dh = (touchNow.h - touchStart.h)/1;
 
-
-				//console.log("dy", dy, "dh", dh);
-
 				dy-=dh/2;
 				dx-=dw/2;
 			}
@@ -297,11 +289,7 @@ var CropTool = (function() {
 					var p = {x:w, y:h};
 					var r = cropData.ratio;
 					var m = p.y + p.x*r;
-					/*
-					x/r = m - x*r
-					m = x(1/r + r)
-					x = m / (1/r + r)
-					*/
+
 					w = m / (r + 1/r);
 					h = w/r;
 
@@ -354,8 +342,7 @@ var CropTool = (function() {
 			maxY = Math.max(maxY, t.pageY);
 			minY = Math.min(minY, t.pageY);
 		}
-		//info.textContent = Math.round(minX) + ", " + Math.round(maxX);
-		//info.textContent = Math.round(minY) + ", " + Math.round(maxY);
+
 		return {
 			x: (minX+maxX)/2,
 			y: (minY+maxY)/2,
