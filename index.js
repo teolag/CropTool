@@ -5,11 +5,11 @@ var previewContext = previewCanvas.getContext('2d');
 
 
 document.getElementById("btnCropDogs").addEventListener("click", function(e) {
-	CropTool.open({url:'dogs.jpg', ratio:2, cropCallback:cropCallback});
+	CropTool.open({url:'dogs.jpg', ratio:2, onCrop:cropCallback});
 });
 
 document.getElementById("btnCropDogs2").addEventListener("click", function(e) {
-	CropTool.open({url:'dogs.jpg', outWidth:500, outHeight:500, cropCallback:cropCallback});
+	CropTool.open({url:'dogs.jpg', outWidth:500, outHeight:500, onCrop:cropCallback});
 });
 
 document.getElementById("btnWebURL").addEventListener("click", function(e) {
@@ -17,7 +17,7 @@ document.getElementById("btnWebURL").addEventListener("click", function(e) {
 		url:'http://www2.pingpong.se/wp-content/uploads/2013/12/pingpong_klossar3-1020x350.png',
 		maxWidth: 100,
 		maxHeight: 100,
-		cropCallback:cropCallback
+		onCrop:cropCallback
 	});
 });
 
@@ -28,7 +28,7 @@ document.getElementById("uploader").addEventListener("change", function(e) {
 		reader.onload = function(e){
 			CropTool.open({
 				dataUrl: reader.result,
-				cropCallback:cropCallback
+				onCrop:cropCallback
 			});
 		}
 		reader.readAsDataURL(files[i]);

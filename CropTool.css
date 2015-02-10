@@ -4,7 +4,7 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: rgba(0,0,0,0.3);
+	background-color: rgba(0,0,0,0.4);
 }
 
 .CropTool .area {
@@ -25,7 +25,7 @@
 	width: 100px;
 	height: 100px;
 	cursor: move;
-	box-shadow: 0 0 0 2000px rgba(0,0,0,0.7);
+	box-shadow: 0 0 0 1000px rgba(0,0,0,0.7);
 }
 .CropTool .boxResizer {
 	position: absolute;
@@ -47,18 +47,21 @@
 
 .CropTool .icon {
 	position: absolute;
-	bottom: 0;
+	bottom: 1em;
 	width: 40px;
 	height: 40px;
-	fill: #6a6;
+	fill: #666;
 	cursor: pointer;
 }
-.CropTool .icon:hover {
-	fill: #9b9;
-}
 .CropTool .icon-cancel {
-	left: 0;
+	left: 1em;
+}
+.CropTool .icon-cancel:hover {
+	fill: #a66;
 }
 .CropTool .icon-ok {
-	right: 0;
+	right: 1em;
+}
+.CropTool .icon-ok:hover {
+	fill: #6a6;
 }

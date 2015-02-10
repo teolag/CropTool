@@ -40,8 +40,8 @@ var CropTool = (function() {
 			useRatio = true;
 		}
 
-		cropCallback = s.cropCallback;
-		cancelCallback = s.cancelCallback;
+		cropCallback = s.onCrop;
+		cancelCallback = s.onCancel;
 
 		addEventListener("keydown", keyHandler, false);
 		addEventListener("resize", fixLayout, false);
@@ -73,16 +73,18 @@ var CropTool = (function() {
 		btnOk = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 		btnOk.classList.add("icon", "icon-ok");
 		var btnOkUse = document.createElementNS("http://www.w3.org/2000/svg", "use");
-		btnOkUse.setAttributeNS("http://www.w3.org/1999/xlink", "href", "CropTool.svg#icon-ok");
+		//btnOkUse.setAttributeNS("http://www.w3.org/1999/xlink", "href", "http://xio.se/projects/croptool/CropTool.svg#icon-ok");
 		btnOk.appendChild(btnOkUse);
 		btnOk.addEventListener("click", clickOk, false);
+		btnOk.addEventListener("touchend", clickOk, false);
 
 		btnCancel = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 		btnCancel.classList.add("icon", "icon-cancel");
 		var btnCancelUse = document.createElementNS("http://www.w3.org/2000/svg", "use");
-		btnCancelUse.setAttributeNS("http://www.w3.org/1999/xlink", "href", "CropTool.svg#icon-cancel");
+		//btnCancelUse.setAttributeNS("http://www.w3.org/1999/xlink", "href", "http://xio.se/projects/croptool/CropTool.svg#icon-cancel");
 		btnCancel.appendChild(btnCancelUse);
 		btnCancel.addEventListener("click", clickCancel, false);
+		btnCancel.addEventListener("touchend", clickCancel, false);
 
 		main.appendChild(area);
 		main.appendChild(btnOk);
@@ -95,10 +97,12 @@ var CropTool = (function() {
 			image = new Image();
 			image.src = s.url;
 			cropData.url = s.url;
+			console.debug("load from url", s.url);
 		} else if(s.dataUrl) {
 			image = new Image();
 			image.src = s.dataUrl;
 			cropData.dataUrl = s.dataUrl;
+			console.debug("load from dataUrl", s.dataUrl);
 		} else {
 			console.warn("Either url or dataUrl must be defined to crop an image");
 			return;
@@ -200,6 +204,7 @@ var CropTool = (function() {
 	},
 
 	cropHandler = function(e) {
+		//console.log("event", e.type, e.target);
 
 		if(e.type === "mousedown" || e.type === "touchstart") {
 			if(e.type === "mousedown") {
@@ -212,19 +217,13 @@ var CropTool = (function() {
 					action="resize";
 				}
 			} else if(e.type === "touchstart") {
+				//console.log("touchstart", e);
 				touchStart = getTouchInfo(e);
-				if(e.touches.length>1) {
-					downSize = {
-						x: Math.abs(e.touches[0].pageX-e.touches[1].pageX),
-						y: Math.abs(e.touches[0].pageY-e.touches[1].pageY)
-					};
-					action="resize";
-				} else {
-					mouseDown = {x: e.touches[0].pageX, y: e.touches[0].pageY};
-					action="move";
+				action="gesture";
+				if(e.touches.length===1) {
+					addEventListener("touchend", cropHandler, false);
+					addEventListener("touchmove", cropHandler, false);
 				}
-				addEventListener("touchend", cropHandler, false);
-				addEventListener("touchmove", cropHandler, false);
 			}
 			startValue = {x: cropData.left, y: cropData.top, w: cropData.width, h: cropData.height};
 			e.preventDefault();
@@ -233,9 +232,15 @@ var CropTool = (function() {
 			removeEventListener("mouseup", cropHandler, false);
 			removeEventListener("mousemove", cropHandler, false);
 		} else if(e.type === "touchend") {
-			action = null;
-			removeEventListener("touchend", cropHandler, false);
-			removeEventListener("touchmove", cropHandler, false);
+			//console.log("touchend", e);
+			touchStart = getTouchInfo(e);
+			startValue = {x: cropData.left, y: cropData.top, w: cropData.width, h: cropData.height};
+			if(e.touches.length===0) {
+				action = null;
+				//console.log("alltouchend", e);
+				removeEventListener("touchend", cropHandler, false);
+				removeEventListener("touchmove", cropHandler, false);
+			}
 		} else if(e.type === "mousemove" || e.type === "touchmove") {
 			var dx, dy, dw, dh;
 
@@ -253,8 +258,11 @@ var CropTool = (function() {
 
 				dx = touchNow.x - touchStart.x;
 				dy = touchNow.y - touchStart.y;
-				dw = touchNow.w - touchStart.w;
-				dh = touchNow.h - touchStart.h;
+				dw = (touchNow.w - touchStart.w)/1;
+				dh = (touchNow.h - touchStart.h)/1;
+
+
+				//console.log("dy", dy, "dh", dh);
 
 				dy-=dh/2;
 				dx-=dw/2;
@@ -373,6 +381,8 @@ var CropTool = (function() {
 	close = function() {
 		removeEventListener("resize", fixLayout, false);
 		removeEventListener("keypress", keyHandler, false);
+		removeEventListener("mousedown", cropHandler, false);
+		removeEventListener("touchstart", cropHandler, false);
 		document.body.removeChild(main);
 	};
 
