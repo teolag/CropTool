@@ -50,18 +50,20 @@
 	bottom: 1em;
 	width: 40px;
 	height: 40px;
-	fill: #666;
 	cursor: pointer;
+	background-color: transparent;
+	border: 0;
+	opacity: 0.5;
+}
+.CropTool .icon:hover {
+	opacity: 1;
 }
 .CropTool .icon-cancel {
+	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath class='path1' fill='#a66' d='M741.7 755.4q0 23-16 39L648 872q-16 16-39 16t-38.7-16l-168-168-168 168q-16 16-39 16t-38.7-16L79 794.3q-16-16-16-39t16-38.7l168-168-168-168q-16-16-16-39T79 303l77.6-78q16-16 38.8-16t39 16l168 168 168-168q16-16 38.7-16t39 16l77.8 78q16 16 16 38.7t-16 39l-168 168 168 168q16 16 16 38.7z'/%3E%3C/svg%3E");
 	left: 1em;
 }
-.CropTool .icon-cancel:hover {
-	fill: #a66;
-}
+
 .CropTool .icon-ok {
+	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath class='path1' fill='#6a6' d='M955 323.4q0 23-16 39L447.3 853.6q-16 16-38.8 16t-39-16L85.2 569q-16-16-16-38.7t16-39l78-77.6q16-16 38.7-16t39 16l168 168.6L783.2 207q16-16 39-16t38.7 16l78 77.6q16 16 16 38.8z'/%3E%3C/svg%3E");
 	right: 1em;
-}
-.CropTool .icon-ok:hover {
-	fill: #6a6;
 }

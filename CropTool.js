@@ -70,19 +70,15 @@ var CropTool = (function() {
 		info.classList.add("info");
 
 
-		btnOk = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		btnOk = document.createElement("button");
+		btnOk.type = "button";
 		btnOk.classList.add("icon", "icon-ok");
-		var btnOkUse = document.createElementNS("http://www.w3.org/2000/svg", "use");
-		btnOkUse.setAttributeNS("http://www.w3.org/1999/xlink", "href", "CropTool.svg#icon-ok");
-		btnOk.appendChild(btnOkUse);
 		btnOk.addEventListener("click", clickOk, false);
 		btnOk.addEventListener("touchend", clickOk, false);
 
-		btnCancel = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		btnCancel = document.createElement("button");
+		btnCancel.type = "button";
 		btnCancel.classList.add("icon", "icon-cancel");
-		var btnCancelUse = document.createElementNS("http://www.w3.org/2000/svg", "use");
-		btnCancelUse.setAttributeNS("http://www.w3.org/1999/xlink", "href", "CropTool.svg#icon-cancel");
-		btnCancel.appendChild(btnCancelUse);
 		btnCancel.addEventListener("click", clickCancel, false);
 		btnCancel.addEventListener("touchend", clickCancel, false);
 
